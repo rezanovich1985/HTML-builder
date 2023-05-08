@@ -22,27 +22,27 @@ async function copyFile(fileNameSrc, fileNameDest) {
     copyDir(fileNameSrc, fileNameDest);
   }
 }
-async function deleteDir(dirname) {
+async function deleteDir(dirName) {
   try {
-    await fsp.access(dirname);
+    await fsp.access(dirName);
   } catch {
     return;
   }
 
-  const files = await fsp.readdir(dirname);
+  const files = await fsp.readdir(dirName);
   for (const file of files) {
-    const fileName = path.resolve(dirname, file);
+    const fileName = path.resolve(dirName, file);
     await deleteFile(fileName);
   }
 
-  await fsp.rmdir(dirname);
+  //await fsp.rmdir(dirName);
 }
 async function deleteFile(fileName) {
   const stat = await fsp.stat(fileName);
   if (stat.isFile()) {
-    fsp.unlink(fileName);
+    await fsp.unlink(fileName);
   } else if (stat.isDirectory()) {
-    deleteDir(fileName);
+    await deleteDir(fileName);
   }
 }
 
@@ -50,3 +50,5 @@ copyDir(
   path.resolve(__dirname, "files"),
   path.resolve(__dirname, "files-copy")
 );
+
+exports.copyDir = copyDir;

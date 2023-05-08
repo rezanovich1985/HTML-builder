@@ -13,7 +13,7 @@ async function mergeStyles(src, dest) {
       continue;
     }
 
-    fs.createReadStream(fileName).pipe(output);
+    fs.createReadStream(fileName).pipe(output, { end: false });
   }
 }
 
@@ -21,3 +21,5 @@ mergeStyles(
   path.resolve(__dirname, "styles"),
   path.resolve(__dirname, "project-dist/bundle.css")
 );
+
+exports.mergeStyles = mergeStyles;
