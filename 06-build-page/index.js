@@ -39,7 +39,7 @@ const { copyDir } = require("../04-copy-directory/index.js");
 
   mergeStyles(
     path.resolve(__dirname, "styles"),
-    path.resolve(__dirname, "project-dist/style.css")
+    path.resolve(dirNameDest, "style.css")
   );
   copyDir(
     path.resolve(__dirname, "assets"),
